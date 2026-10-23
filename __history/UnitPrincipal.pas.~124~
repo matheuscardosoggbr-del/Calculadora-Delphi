@@ -1,0 +1,234 @@
+  unit UnitPrincipal;
+
+  interface
+
+  uses
+    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+    Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons;
+
+  type
+    TFcalculadora = class(TForm)
+      Pfundo: TPanel;
+      PCalculo: TPanel;
+      Ecalculo: TEdit;
+      Pnumeros: TPanel;
+      B1: TButton;
+      B2: TButton;
+      B3: TButton;
+      B6: TButton;
+      B5: TButton;
+      B4: TButton;
+      B9: TButton;
+      B8: TButton;
+      B7: TButton;
+      B0: TButton;
+      Badição: TBitBtn;
+      BSubtracao: TBitBtn;
+      Bmulti: TBitBtn;
+      Bdivisao: TBitBtn;
+      Blimpar: TBitBtn;
+      Benter: TBitBtn;
+    Bdel: TBitBtn;
+      procedure B1Click(Sender: TObject);
+      procedure B2Click(Sender: TObject);
+      procedure B3Click(Sender: TObject);
+      procedure B4Click(Sender: TObject);
+      procedure B5Click(Sender: TObject);
+      procedure B6Click(Sender: TObject);
+      procedure B7Click(Sender: TObject);
+      procedure B8Click(Sender: TObject);
+      procedure B9Click(Sender: TObject);
+      procedure B0Click(Sender: TObject);
+      procedure BadiçãoClick(Sender: TObject);
+      procedure BSubtracaoClick(Sender: TObject);
+      procedure BmultiClick(Sender: TObject);
+      procedure BdivisaoClick(Sender: TObject);
+      procedure BlimparClick(Sender: TObject);
+      procedure BenterClick(Sender: TObject);
+    procedure BdelClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+
+    private
+      FNumero1: Integer;
+      FNumero2: Integer;
+      FOperacao: Char; // Armazena qual operação foi selecionada
+    public
+      { Public declarations }
+    end;
+
+  var
+    Fcalculadora: TFcalculadora;
+
+  implementation
+
+  {$R *.dfm}
+
+
+  procedure TFcalculadora.B0Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '0';
+  end;
+
+  procedure TFcalculadora.B1Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '1';
+  end;
+
+  procedure TFcalculadora.B2Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '2';
+  end;
+
+  procedure TFcalculadora.B3Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '3';
+  end;
+
+  procedure TFcalculadora.B4Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '4';
+  end;
+
+  procedure TFcalculadora.B5Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '5';
+  end;
+
+  procedure TFcalculadora.B6Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '6';
+  end;
+
+  procedure TFcalculadora.B7Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '7';
+  end;
+
+  procedure TFcalculadora.B8Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '8';
+  end;
+
+  procedure TFcalculadora.B9Click(Sender: TObject);
+  begin
+    Ecalculo.Text := Ecalculo.Text + '9';
+  end;
+
+  procedure TFcalculadora.BadiçãoClick(Sender: TObject);
+  begin
+    if Ecalculo.Text <> '' then
+    begin
+      FNumero1 := StrToInt(Ecalculo.Text);
+      FOperacao := '+';
+      Ecalculo.Clear;
+    end;
+  end;
+
+  procedure TFcalculadora.BSubtracaoClick(Sender: TObject);
+  begin
+    if Ecalculo.Text <> '' then
+    begin
+      FNumero1 := StrToInt(Ecalculo.Text);
+      FOperacao := '-';
+      Ecalculo.Clear;
+    end;
+  end;
+
+  procedure TFcalculadora.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   case Key of
+    VK_NUMPAD0, Ord('0'): B0.Click;
+    VK_NUMPAD1, Ord('1'): B1.Click;
+    VK_NUMPAD2, Ord('2'): B2.Click;
+    VK_NUMPAD3, Ord('3'): B3.Click;
+    VK_NUMPAD4, Ord('4'): B4.Click;
+    VK_NUMPAD5, Ord('5'): B5.Click;
+    VK_NUMPAD6, Ord('6'): B6.Click;
+    VK_NUMPAD7, Ord('7'): B7.Click;
+    VK_NUMPAD8, Ord('8'): B8.Click;
+    VK_NUMPAD9, Ord('9'): B9.Click;
+    VK_BACK : Bdel.Click;
+    VK_RETURN: Benter.Click;
+    VK_OEM_PLUS, VK_ADD : Badição.Click;
+    VK_OEM_MINUS, VK_SUBTRACT : BSubtracao.Click;
+    VK_DIVIDE: Bdivisao.Click;
+    VK_MULTIPLY: Bmulti.Click;
+  end;
+  if (ssShift in Shift) and (key = ord('8')) then
+  begin
+    Bmulti.click;
+    key:= 0;
+  end;
+end;
+
+procedure TFcalculadora.BmultiClick(Sender: TObject);
+  begin
+    if Ecalculo.Text <> '' then
+    begin
+      FNumero1 := StrToInt(Ecalculo.Text);
+      FOperacao := '*';
+      Ecalculo.Clear;
+    end;
+  end;
+
+  procedure TFcalculadora.BdelClick(Sender: TObject);
+  var
+  texto: string;
+begin
+  texto := Ecalculo.Text;
+  if Length(texto) > 0 then
+  begin
+    SetLength(texto, length(texto) -1);
+    Ecalculo.Text:= texto;
+  end;
+end;
+
+procedure TFcalculadora.BdivisaoClick(Sender: TObject);
+  begin
+    if Ecalculo.Text <> '' then
+    begin
+      FNumero1 := StrToInt(Ecalculo.Text);
+      FOperacao := '/';
+      Ecalculo.Clear;
+    end;
+  end;
+
+  procedure TFcalculadora.BlimparClick(Sender: TObject);
+  begin
+    Ecalculo.Clear;
+    FNumero1 := 0;
+    FNumero2 := 0;
+    FOperacao := #0;
+  end;
+
+  procedure TFcalculadora.BenterClick(Sender: TObject);
+  var
+    Resultado: Integer;
+  begin
+    if Ecalculo.Text <> '' then
+    begin
+      FNumero2 := StrToInt(Ecalculo.Text);
+
+      case FOperacao of
+        '+': Resultado := FNumero1 + FNumero2;
+        '-': Resultado := FNumero1 - FNumero2;
+        '*': Resultado := FNumero1 * FNumero2;
+        '/':
+          if FNumero2 <> 0 then
+            Resultado := FNumero1 div FNumero2
+          else
+          begin
+            ShowMessage('Erro: Divisão por zero!');
+            Exit;
+          end;
+      else
+        Resultado := FNumero2;
+      end;
+
+      Ecalculo.Text := IntToStr(Resultado);
+      FNumero1 := Resultado;
+    end;
+  end;
+
+  end.
